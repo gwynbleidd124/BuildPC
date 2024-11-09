@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <main class='main'>
+        <div class="main-background-users">
+            <img src="{% static 'users/image/main-users.jpg' %}" alt="main photo">
+        </div>
+        <div class="auth-container">
+            <div class="auth">
+                <h1 class="auth-h1">Регистрация</h1>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-error">{{ form.non_field_errors }}</div>
+                    {% for f in form %}
+                        {% if f.name != 'captcha' %}
+                        <p class=""><label class="form-label-auth" for="{{ for.id_for_label }}">{{ f.label }}</label>{{ f }}
+                        </p>
+                        <div class="form-error">{{ f.error }}</div>
+                        {% endif %}
+                    {% endfor %}
+                    <div class="captcha">
+                        {{ form.captcha }}
+                    </div>
+
+                    <p>
+                        <button type="submit">Зарегистрироваться</button>
+                    </p>
+                </form>
+            </div>
+        </div>
+        </section>
+    </main>
+{% endblock %}

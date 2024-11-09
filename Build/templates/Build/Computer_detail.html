@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <main class='main'>
+    <section class="main-display-2">
+        <div class="main-background">
+        </div>
+        <section class="team">
+            <div class="container-pc-list">
+                <div class="process-title team-title">
+                    <div class="computer-image">
+                        {% if computer.case.image %}
+                            <img src="{{ computer.case.image.url }}" alt="{{ comp.name }}">
+                        {% endif %}
+                    </div>
+                    <div class="computer-name">
+                        <h1 class="computer-h1">{{ computer.name }}</h1>
+                        <div class="computer-text">{{ computer.info }}</div>
+                    </div>
+                </div>
+                <div class="computer-accessories">
+                    <h1 class="accessories-h1">Комплектующие Компьютера</h1>
+                    <table class="accessories">
+                        <tr>
+                            <td><span>Видеокарта:</span></td>
+                            <td><a href="{% url 'component_detail' 'videocarty' computer.gpu.pk %}">{{ computer.gpu.name }}</a></td>
+                        </tr>
+                        <tr>
+                            <td><span>Процессор:</span></td>
+                            <td><a href="{% url 'component_detail' 'protsessory' computer.cpu.pk %}">{{ computer.cpu.name }}</a></td>
+                        </tr>
+                        <tr>
+                            <td><span>Материнская плата:</span></td>
+                            <td>
+                                <a href="{% url 'component_detail' 'materinskie-platy' computer.motherboard.pk %}">{{ computer.motherboard.name }}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span>Оперативная память:</span></td>
+                            <td>
+                                {% for ram in computer.ram.all %}
+                                    <a href="{% url 'component_detail' 'operativnaja-pamjat' ram.pk %}">{{ ram.name }}</a>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span>Накопитель:</span></td>
+                            <td>
+                                {% for storage in computer.storage_device.all %}
+                                    <a href="{% url 'component_detail' 'nakopiteli' storage.pk %}">{{ storage.name }}</a>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span>Блок питания:</span></td>
+                            <td>
+                                <a href="{% url 'component_detail' 'bloki-pitanija' computer.power_supply.pk %}">{{ computer.power_supply.name }}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span>Система охлаждения:</span></td>
+                            <td>
+                                <a href="{% url 'component_detail' 'ohlazhdenie-dlja-protsessora' computer.cooling_system.pk %}">{{ computer.cooling_system.name }}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span>Корпус:</span></td>
+                            <td>
+                                <a href="{% url 'component_detail' 'korpus' computer.case.pk %}">{{ computer.case.name }}</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </section>
+    </main>
+{% endblock %}

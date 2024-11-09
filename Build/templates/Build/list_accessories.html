@@ -1,0 +1,366 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>готовые сборки пк</title>
+</head>
+
+{% block content %}
+    <main class='main'>
+        <section class="main-display-2">
+            <section class="team">
+                <div class="container-accessories-list">
+                    <div class="process-title team-title"></div>
+                    <div class="team-wrap">
+                        <div class="container-2">
+                            <!-- Боковая панель -->
+                            <div class="sidebar">
+                                <h2>Боковая панель</h2>
+                                <form method="get" action="{% url 'category-items' category.slug %}">
+                                    <div class="sidebar-filters">
+                                        <label for="price_min">Минимальная цена:</label>
+                                        <input type="number" name="price_min" id="price_min" value="{{ request.GET.price_min }}">
+
+                                        <label for="price_max">Максимальная цена:</label>
+                                        <input type="number" name="price_max" value="{{ request.GET.price_max }}" id="price_max">
+                                    </div>
+                                    <div>
+                                        <label for="order_by">Сортировка по цене</label>
+                                        <select id="order_by" name="order_by">
+                                            <option value="">Не сортировать</option>
+                                            <option value="asc" {% if request.GET.order_by == 'asc' %}selected{% endif %}>Сначала дешёвые</option>
+                                            <option value="desc"
+                                                    {% if request.GET.order_by == 'desc' %}selected{% endif %}>Сначала
+                                                дорогие
+                                            </option>
+                                        </select>
+                                    </div>
+                                    {% if manufacturer %}
+                                        <label for="manufacturer">Производитель: </label>
+                                        <select id="manufacturer" name="manufacturer">
+                                            <option value="">Все производители</option>
+                                            {% for item in manufacturer %}
+                                                <option value="{{ item }}"
+                                                        {% if request.GET.manufacturer == item %}selected{% endif %}>{{ item }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    {% endif %}
+                                    {% if manufacturer_chip %}
+                                        <label for="manufacturer_chip">Производитель видеочипа:</label>
+                                        <select id="manufacturer_chip" name="manufacturer_chip">
+                                            <option value="">Все производители</option>
+                                            {% for item in manufacturer_chip %}
+                                                <option value="{{ item }}"
+                                                        {% if request.GET.manufacturer_chip == item %}selected{% endif %}>{{ item }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    {% endif %}
+                                    {% if line_videocard %}
+                                        <div>
+                                            <label for="line_videocard">Линейка видеокарты:</label>
+                                            <select id="line_videocard" name="line_videocard">
+                                                <option value="">Любая</option>
+                                                {% for item in line_videocard %}
+                                                    <option value="{{ item }}"
+                                                            {% if request.GET.line_videocard == item %}selected{% endif %}>{{ item }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    {% endif %}
+                                    {% if socket %}
+                                        <label for="socket">Сокет:</label>
+                                        <select id="socket" name="socket">
+                                            <option value="">Все сокеты</option>
+                                            {% for item in socket %}
+                                                <option value="{{ item }}" {% if request.GET.socket == item %}selected{% endif %}>{{ item }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    {% endif %}
+                                    {% if chipset %}
+                                        <label for="chipset">Чипсет:</label>
+                                        <select id="chipset" name="chipset">
+                                            <option value="">Все чипсеты:</option>
+                                            {% for item in chipset %}
+                                                <option value="{{ item }}" {% if request.GET.chipset == item %}selected{% endif %}>{{ item }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    {% endif %}
+                                    {% if form_factor %}
+                                        <label for="form_factor">Форм фактор:</label>
+                                        <select id="form_factor" name="form_factor">
+                                            <option value="">Любой</option>
+                                            {% for item in form_factor %}
+                                                <option value="{{ item }}" {% if request.GET.form_factor == item %}selected{% endif %}>{{ item }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    {% endif %}
+                                    {% if memory %}
+                                        <label for="memory">Память:</label>
+                                        <select id="memory" name="memory">
+                                            <option value="">Любая</option>
+                                            {% for item in memory %}
+                                                <option value="{{ item }}" {% if request.GET.memory == item %}selected{% endif %}>{{ item }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    {% endif %}
+                                    {% if memory_slots %}
+                                        <label for="memory_slots">Слоты памяти:</label>
+                                        <select id="memory_slots" name="memory_slots">
+                                            <option value="">Любое количество</option>
+                                            {% for item in memory_slots %}
+                                                <option value="{{ item }}" {% if request.GET.memory_slots == item|stringformat:"s" %}selected{% endif %}>{{ item }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    {% endif %}
+                                    {% if certification %}
+                                        <label for="certification">Сертификат:</label>
+                                        <select id="certification" name="certification">
+                                            <option value="">Любой сертификат</option>
+                                            {% for item in certification %}
+                                                <option value="{{ item }}" {% if request.GET.certification == item|stringformat:"s" %}selected{% endif %}>{{ item }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    {% endif %}
+                                    {% if color %}
+                                        <label for="color">Цвет:</label>
+                                        <select id="color" name="color">
+                                            <option value="">Любой цвет</option>
+                                            {% for item in color %}
+                                                <option value="{{ item }}" {% if request.GET.color == item %}selected{% endif %}>{{ item }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    {% endif %}
+                                    {% if location_power_supply %}
+                                        <label for="location_power_supply">Расположение блока питания:</label>
+                                        <select id="location_power_supply" name="location_power_supply">
+                                            <option value="">Любое</option>
+                                            {% for item in location_power_supply %}
+                                                <option value="{{ item }}" {% if request.GET.location_power_supply == item %}selected{% endif %}>{{ item }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    {% endif %}
+                                    {% if side_window %}
+                                        <label for="side_window">Боковое окно:</label>
+                                        <select id="side_window" name="side_window">
+                                            <option value="">Не важно</option>
+                                            {% for item in side_window %}
+                                                <option value="{{ item }}" {% if request.GET.side_window == item %}selected{% endif %}>{{ item }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    {% endif %}
+                                    {% if memory_size %}
+                                        <label for="memory_size">Общий объём:</label>
+                                        <select id="memory_size" name="memory_size">
+                                            <option value="">Не важно</option>
+                                            {% for item in memory_size %}
+                                                <option value="{{ item }}" {% if request.GET.memory_size == item %}selected{% endif %}>{{ item }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    {% endif %}
+                                    {% if type_memory %}
+                                        <label for="type_memory">Тип памяти:</label>
+                                        <select id="type_memory" name="type_memory">
+                                            <option value="">Не важно</option>
+                                            {% for item in type_memory %}
+                                                <option value="{{ item }}" {% if request.GET.type_memory == item %}selected{% endif %}>{{ item }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    {% endif %}
+                                    {% if frequency %}
+                                        <label for="frequency">Частота памяти:</label>
+                                        <select id="frequency" name="frequency">
+                                            <option value="">Не важно</option>
+                                            {% for item in frequency %}
+                                                <option value="{{ item }}" {% if request.GET.frequency == item %}selected{% endif %}>{{ item }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    {% endif %}
+                                    {% if type %}
+                                        <label for="type">Тип накопителя:</label>
+                                        <select id="type" name="type">
+                                            <option value="">Не важно</option>
+                                            {% for item in type %}
+                                                <option value="{{ item }}" {% if request.GET.type == item %}selected{% endif %}>{{ item }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    {% endif %}
+                                    {% if category.slug == 'videocarty' %}
+                                    <div>
+                                        <label for="gpu_order_by">Сортировка по видеопамяти</label>
+                                        <select id="gpu_order_by" name="gpu_order_by">
+                                            <option value="">Не сортировать</option>
+                                            <option value="asc" {% if request.GET.gpu_order_by == 'asc' %}selected{% endif %}>Сначала меньше</option>
+                                            <option value="desc"
+                                                    {% if request.GET.gpu_order_by == 'desc' %}selected{% endif %}>Сначала больше
+                                            </option>
+                                        </select>
+                                    </div>
+                                    {% endif %}
+                                    {% if category.slug == 'bloki-pitanija' %}
+                                        <form method="get" action="{% url 'category-items' category.slug %}">
+                                        <div>
+                                            <label for="wattage_min">Минимальная мощность:</label>
+                                            <input type="number" name="wattage_min" id="wattage_min"
+                                                   value="{{ request.GET.wattage_min }}">
+                                            <label for="wattage_max">Максимальная мощность:</label>
+                                            <input type="number" name="wattage_max"
+                                                   value="{{ request.GET.wattage_max }}" id="wattage_max">
+                                        </div>
+                                    {% endif %}
+                                    {% if category.slug == 'ohlazhdenie-dlja-protsessora' %}
+                                        <form method="get" action="{% url 'category-items' category.slug %}">
+                                        <div>
+                                            <label for="max_speed_min">Мин скорость вращения:</label>
+                                            <input type="number" name="max_speed_min" id="max_speed_min"
+                                                   value="{{ request.GET.max_speed_min }}">
+                                            <label for="max_speed_max">Макс скорость вращения:</label>
+                                            <input type="number" name="max_speed_max"
+                                                   value="{{ request.GET.max_speed_max }}" id="max_speed_max">
+                                        </div>
+                                        <div>
+                                            <label for="power_dissipation_min">Минимальная рассеиваемая мощность:</label>
+                                            <input type="number" name="power_dissipation_min" id="power_dissipation_min"
+                                                   value="{{ request.GET.wattage_min }}">
+                                            <label for="power_dissipation_max">Максимальная рассеиваемая мощность:</label>
+                                            <input type="number" name="power_dissipation_max"
+                                                   value="{{ request.GET.power_dissipation_max }}" id="power_dissipation_max">
+                                        </div>
+                                        <div>
+                                            <label for="heat_pipes_min">Минимум тепловых трубок:</label>
+                                            <input type="number" name="heat_pipes_min" id="heat_pipes_min"
+                                                   value="{{ request.GET.heat_pipes_min }}">
+                                            <label for="heat_pipes_max">Максимум тепловых трубок:</label>
+                                            <input type="number" name="heat_pipes_max"
+                                                   value="{{ request.GET.heat_pipes_max }}" id="heat_pipes_max">
+                                        </div>
+                                    {% endif %}
+                                    {% if category.slug == 'nakopiteli' %}
+                                        <label for="memory_size_min">Минимальный объём памяти:</label>
+                                        <input type="number" name="memory_size_min" id="memory_size_min"
+                                            value="{{ request.GET.memory_size_min }}">
+                                        <label for="memory_size_max">Максимальный объём памяти:</label>
+                                        <input type="number" name="memory_size_max"
+                                               value="{{ request.GET.memory_size_max }}" id="memory_size_max">
+                                    {% endif %}
+                                    <button type="submit">Фильтровать</button>
+                                    </form>
+                            </div>
+                            <!-- Основной контент -->
+                            <div class="content">
+                                {% for item in items %}
+                                    <div class="accessories-item">
+                                        <div class="accessories-image">
+                                            {% if item.image %}
+                                                <img src="{{ item.image.url }}">
+                                            {% endif %}
+                                        </div>
+                                        <div class="accessories-info">
+                                            {% if category.slug == 'videocarty' %}
+                                                <h1>{{ item.name }} [ {{ item.manufacturer_chip }}
+                                                    | {{ item.memory }}GB {{ item.type_memory }} | {{ item.frequency }}
+                                                    МГц
+                                                    | {{ item.turbo_frequency }} МГц ]</h1>
+                                                <a class="accessories-link"
+                                                   href="{% url 'component_detail' component_type=category.slug pk=item.pk %}">
+                                                    Посмотреть полную информацию
+                                                </a>
+                                            {% elif category.slug == 'protsessory' %}
+                                                <h1>{{ item.name }} [ {{ item.manufacturer }} | {{ item.socket }}
+                                                    | {{ item.chipset }}
+                                                    | {{ item.cores }} ядер | {{ item.threads }} потоков
+                                                    | {{ item.base_clock }} ГГц
+                                                    | {{ item.turbo_clock }} ГГц | L2 {{ item.cash_2 }} |
+                                                    L3 {{ item.cash_3 }} ]</h1>
+                                                <a class="accessories-link"
+                                                   href="{% url 'component_detail' component_type=category.slug pk=item.pk %}">
+                                                    Посмотреть полную информацию
+                                                </a>
+                                            {% elif category.slug == 'materinskie-platy' %}
+                                                <h1>{{ item.name }} [ {{ item.manufacturer }}
+                                                    | {{ item.form_factor }} | {{ item.socket }} | {{ item.chipset }}
+                                                    | {{ item.memory }}x{{ item.memory_slots }}
+                                                    | M2x{{ item.M2_slots }} ]</h1>
+                                                <a class="accessories-link"
+                                                   href="{% url 'component_detail' component_type=category.slug pk=item.pk %}">
+                                                    Посмотреть полную информацию
+                                                </a>
+                                            {% elif category.slug == 'bloki-pitanija' %}
+                                                <h1>{{ item.name }} [ {{ item.manufacturer }}
+                                                    | {{ item.wattage }} Ватт | {{ item.certification }}
+                                                    | {{ item.power_gpu }} | {{ item.power_cpu }} |
+                                                    {{ item.power_12W }} Ватт ]</h1>
+                                                <a class="accessories-link"
+                                                   href="{% url 'component_detail' component_type=category.slug pk=item.pk %}">
+                                                    Посмотреть полную информацию
+                                                </a>
+                                            {% elif category.slug == 'korpus' %}
+                                                <h1>{{ item.name }} [ {{ item.manufacturer }}
+                                                    | {{ item.form_factor }} | {{ item.color }} ]</h1>
+                                                <a class="accessories-link"
+                                                   href="{% url 'component_detail' component_type=category.slug pk=item.pk %}">
+                                                    Посмотреть полную информацию
+                                                </a>
+                                            {% elif category.slug == 'ohlazhdenie-dlja-protsessora' %}
+                                                <h1>{{ item.name }} [ {{ item.manufacturer }}
+                                                    | {{ item.max_speed }} Об/м | {{ item.power_dissipation }} Ватт
+                                                    ]</h1>
+                                                <a class="accessories-link"
+                                                   href="{% url 'component_detail' component_type=category.slug pk=item.pk %}">
+                                                    Посмотреть полную информацию
+                                                </a>
+                                            {% elif category.slug == 'operativnaja-pamjat' %}
+                                                <h1>{{ item.name }} [ {{ item.manufacturer }}
+                                                    | {{ item.memory_size }}GBx{{ item.number_of_modules }}
+                                                    | {{ item.frequency }} МГц }} ]</h1>
+                                                <a class="accessories-link"
+                                                   href="{% url 'component_detail' component_type=category.slug pk=item.pk %}">
+                                                    Посмотреть полную информацию
+                                                </a>
+                                            {% elif category.slug == 'nakopiteli' %}
+                                                <h1>{{ item.name }} [ {{ item.manufacturer }}
+                                                    | {{ item.memory_size }}GBx{{ item.number_of_modules }}
+                                                    | {{ item.frequency }} МГц }} ]</h1>
+                                                <a class="accessories-link"
+                                                   href="{% url 'component_detail' component_type=category.slug pk=item.pk %}">
+                                                    Посмотреть полную информацию
+                                                </a>
+                                            {% else %}
+                                                <h1>{{ item.name }}</h1>
+                                            {% endif %}
+                                            <div class="accessories-price"> {{ item.price }} рублей</div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+                                <!-- Пагинация -->
+                                <div class="pagination">
+                                    <span class="step-links">
+                                    {% if page_obj.has_previous %}
+                                        <a href="?{% for key, value in request.GET.items %}{{ key }}={{ value }}&{% endfor %}page=1">&laquo; Первая</a>
+                                        <a href="?{% for key, value in request.GET.items %}{{ key }}={{ value }}&{% endfor %}page={{ page_obj.previous_page_number }}">Предыдущая</a>
+                                    {% endif %}
+
+                                        <span class="current">
+                                        Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+                                    </span>
+
+                                        {% if page_obj.has_next %}
+                                            <a href="?{% for key, value in request.GET.items %}{{ key }}={{ value }}&{% endfor %}page={{ page_obj.next_page_number }}">Следующая</a>
+                                            <a href="?{% for key, value in request.GET.items %}{{ key }}={{ value }}&{% endfor %}page={{ page_obj.paginator.num_pages }}">Последняя &raquo;</a>
+                                        {% endif %}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+
+{% endblock %}
+
+</body>
+</html>

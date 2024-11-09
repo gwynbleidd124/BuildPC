@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>готовые сборки пк</title>
+</head>
+
+{% block content %}
+    <section class="main-display-2">
+    <div class="container-categories-list">
+        <div class="categories-accessories">
+            {% for cat in categories %}
+                <a href="{% url 'category-items' slug=cat.slug %}">
+                <div class="categories-item">
+                    <h3 class="categories-name">
+                        {{ cat.name }}
+                    </h3>
+                    <div class="categories-image">
+                        {% if cat.image %}
+                            <img src="{{ cat.image.url }}">
+                        {% endif %}
+                    </div>
+                </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+</body>
+</html>

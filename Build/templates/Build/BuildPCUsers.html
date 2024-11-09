@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>готовые сборки пк</title>
+</head>
+
+{% block content %}
+    <main class='main'>
+        <section class="main-display-2">
+            <section class="team">
+                <div class="container-accessories-list">
+                    <div class="process-title team-title"></div>
+                    <div class="team-wrap">
+                        <div class="container-2">
+                            <!-- Боковая панель -->
+                            <div class="sidebar-pc-build">
+                                <h2>Боковая панель</h2>
+                                <form method="get" action="">
+                                    <div>
+                                        <label for="total_price_min">Минимальная цена:</label>
+                                        <input type="number" name="total_price_min" id="price_min" value="{{ request.GET.total_price_min }}">
+
+                                        <label for="total_price_max">Максимальная цена:</label>
+                                        <input type="number" name="total_price_max" value="{{ request.GET.total_price_max }}" id="total_price_max">
+                                    </div>
+                                    <div>
+                                        <label for="order_by">Сортировка по цене</label>
+                                        <select id="order_by" name="order_by">
+                                            <option value="">Не сортировать</option>
+                                            <option value="asc" {% if request.GET.order_by == 'asc' %}selected{% endif %}>Сначала дешёвые</option>
+                                            <option value="desc" {% if request.GET.order_by == 'desc' %}selected{% endif %}>Сначала дорогие</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="gpu__manufacturer">Производитель видеокарты:</label>
+                                        <select id="gpu__manufacturer" name="gpu__manufacturer">
+                                            <option value="">Все производители</option>
+                                            {% for item in gpu__manufacturer %}
+                                                <option value="{{ item }}" {% if request.GET.gpu__manufacturer == item %}selected{% endif %}>{{ item }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="gpu__manufacturer_chip">Производитель чипа видеокарты:</label>
+                                        <select id="gpu__manufacturer_chip" name="gpu__manufacturer_chip">
+                                            <option value="">Все производители</option>
+                                            {% for item in gpu__manufacturer_chip %}
+                                                <option value="{{ item }}" {% if request.GET.gpu__manufacturer_chip == item %}selected{% endif %}>{{ item }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="gpu">Линейка видеокарты:</label>
+                                        <select id="gpu" name="gpu">
+                                            <option value="">Все</option>
+                                            {% for item in gpu %}
+                                            <option value="{{ item }}" {% if request.GET.gpu == item %}selected{% endif %}>{{ item }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="gpu__memory">Количество видеопамяти:</label>
+                                        <select id="gpu__memory" name="gpu__memory">
+                                            <option value="">Любое</option>
+                                            {% for item in gpu__memory %}
+                                            <option value="{{ item }}" {% if request.GET.gpu__memory == item|stringformat:"d" %}selected{% endif %}>{{ item }} ГБ</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="cpu__manufacturer">Производитель процессора:</label>
+                                        <select id="cpu__manufacturer" name="cpu__manufacturer">
+                                            <option value="">Все производители</option>
+                                            {% for item in cpu__manufacturer %}
+                                                <option value="{{ item }}" {% if request.GET.cpu__manufacturer == item %}selected{% endif %}>{{ item }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="socket">Сокет процессора:</label>
+                                        <select id="socket" name="socket">
+                                            <option value="">Все сокеты</option>
+                                            {% for item in socket %}
+                                                <option value="{{ item }}" {% if request.GET.socket == item %}selected{% endif %}>{{ item }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="ram__type_memory">Тип оперативной памяти:</label>
+                                        <select id="ram__type_memory" name="ram__type_memory">
+                                            <option value="">Любой</option>
+                                            {% for item in ram__type_memory %}
+                                                <option value="{{ item }}" {% if request.GET.ram__type_memory == item %}selected{% endif %}>{{ item }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="power_supply__certification">Сертификат блока питания:</label>
+                                        <select id="power_supply__certification" name="power_supply__certification">
+                                            <option value="">Любой</option>
+                                            {% for item in power_supply__certification %}
+                                                <option value="{{ item }}" {% if request.GET.power_supply__certification == item %}selected{% endif %}>{{ item }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="case__color">Цвет корпуса:</label>
+                                        <select id="case__color" name="case__color">
+                                            <option value="">Любой</option>
+                                            {% for item in case__color %}
+                                                <option value="{{ item }}" {% if request.GET.case__color == item %}selected{% endif %}>{{ item }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="case__side_window">Наличие бокового окна у корпуса:</label>
+                                        <select id="case__side_window" name="case__side_window">
+                                            <option value="">Не важно</option>
+                                            {% for item in case__side_window %}
+                                                <option value="{{ item }}" {% if request.GET.case__side_window == item %}selected{% endif %}>{{ item }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="ram__memory_size">Объём оперативной памяти:</label>
+                                        <select id="ram__memory_size" name="ram__memory_size">
+                                            <option value="">Не важно</option>
+                                            {% for item in ram__memory_size %}
+                                                <option value="{{ item }}" {% if request.GET.ram__memory_size == item|stringformat:"d" %}selected{% endif %}>{{ item }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                <button type="submit">Фильтровать</button>
+                            </div>
+                            <!-- Основной контент -->
+                            <div class="content">
+                                {% for comp in computer %}
+                                <div class="accessories-item">
+                                    <div class="accessories-image">
+                                        {% if comp.case.image %}
+                                            <img src="{{ comp.case.image.url }}">
+                                        {% endif %}
+                                    </div>
+                                    <div class="accessories-info">
+                                            {{ comp.name }} | {{ comp.gpu.name }} | {{ comp.cpu.name }} |
+                                        {% for ram in comp.ram.all %}{{ ram.name }} {% endfor %}
+                                        <a class="accessories-link" href="{% url 'computer' comp.slug %}">Посмотреть полную информацию</a>
+                                        <div class="accessories-price">Цена: {{ comp.total_price }} рублей</div>
+                                    </div>
+                                    <div class="author-pc">Автор сборки: {{ comp.author }}</div>
+                                </div>
+                            {% endfor %}
+
+                            <div class="pagination">
+                                    <span class="step-links">
+                                    {% if page_obj.has_previous %}
+                                        <a href="?{% for key, value in request.GET.items %}{{ key }}={{ value }}&{% endfor %}page=1">&laquo; Первая</a>
+                                        <a href="?{% for key, value in request.GET.items %}{{ key }}={{ value }}&{% endfor %}page={{ page_obj.previous_page_number }}">Предыдущая</a>
+                                    {% endif %}
+
+                                        <span class="current">
+                                        Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+                                    </span>
+
+                                        {% if page_obj.has_next %}
+                                            <a href="?{% for key, value in request.GET.items %}{{ key }}={{ value }}&{% endfor %}page={{ page_obj.next_page_number }}">Следующая</a>
+                                            <a href="?{% for key, value in request.GET.items %}{{ key }}={{ value }}&{% endfor %}page={{ page_obj.paginator.num_pages }}">Последняя &raquo;</a>
+                                        {% endif %}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+
+{% endblock %}

@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building your PC</title>
+    <link rel="preconnect" href="fonts/Roboto-Bold.woff">
+    <link rel="preconnect" href="fonts/Roboto-Regular.woff">
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="{% static 'Build/js/script.js' %}" defer></script>
+    <link type='text/css' href="{% static 'Build/css/style.css' %}" rel="stylesheet" />
+</head>
+
+{% block content %}
+    <main class="main">
+        <section class="main-display">
+            <div class="container">
+                <h1 class="main-title">Собираем игровой ПК наиболее выгодно</h1>
+                <a href='{% url 'buildspc' %}' class="link-pc">
+                    Готовые сборки PC
+                </a>
+            </div>
+            <div class="main-background">
+                <img src="{% static 'Build/image/main-screen.jpg' %}" alt="main photo">
+            </div>
+        </section>
+
+        <section class="work">
+            <div class="container">
+                <div class="work-wrap">
+                    <div class="work-img">
+                        <img src="{% static 'Build/image/working.svg' %}" alt="working">
+                    </div>
+
+                    <div  id='target' class="work-text">
+                        <h2 class="work-title">Чем мы занимаемся</h2>
+                        <p class="work-description">Помогаем сэкономить до 40% стоимости игрового компьютера без потери производительности. Подбираем мощные детали компьютера, заказываем у своих поставщиков или напрямую у производителей, чтобы сэкономить ваши деньги. Собираем мощный компьютер, на котором можно играть в любые современные игры и заниматься работой.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <div class="assembly">
+            <div class="container">
+                <div class="assembly-wrap">
+                    <h2 class="assembly-header">Закажите свою уникальную сборку</h2>
+
+                    <div class="assembly-description">Мы свяжемся с вами, чтобы уточнить детали заказа</div>
+
+                    <button class="button assembly-button">Оставить заявку</button>
+
+                    <div class="assembly-socials">
+                        <div class="assembly-item">
+                            <img src="{% static 'Build/image/vk.svg' %}" alt="vk">
+                        </div>
+                        <div class="assembly-item">
+                            <img src="{% static 'Build/image/youtube.svg' %} " alt="youtobe">
+                        </div>
+                        <div class="assembly-item">
+                            <img src="{% static 'Build/image/facebook.svg' %}" alt="facebook">
+                        </div>
+                        <div class="assembly-item">
+                            <img src="{% static 'Build/image/instagram.svg' %}" alt="instagram">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form action="#" class="modal block-center">
+            <div class="modal-inner">
+                <div class="modal-close">
+                    <img src="{% static 'Build/image/cross.svg' %}" alt="cross">
+                </div>
+                <h3 class="modal-header">Заявка на сборку ПК</h3>
+
+                <div class="modal-descr">Мы свяжемся с вами, чтобы обсудить детали заказа</div>
+
+                <div class="modal-elements">
+                    <div class="modal-item">
+                        <input type="text" class="modal-input" placeholder="Как вас зовут">
+                    </div>
+
+                    <div class="modal-item">
+                        <input type="tel" class="modal-input" placeholder="Номер телефона">
+                    </div>
+
+                    <div class="modal-item">
+                        <input type="email" class="modal-input" placeholder="E-mail">
+                    </div>
+                </div>
+
+                <button class="button modal-btn" type="submit">Отправить</button>
+            </div>
+        </form>
+    </main>
+
+</body>
+
+</html>
+{% endblock %}

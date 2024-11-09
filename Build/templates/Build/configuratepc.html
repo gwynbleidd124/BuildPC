@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<main class='main'>
+    <section class="main-display-configurate">
+        <div class="main-background">
+            <img src="{% static 'Build/image/main-screen.jpg' %}" alt="main photo">
+        </div>
+
+        <section class="team">
+            <div class="configurator-container">
+                <div class="configurator">
+                    <h1 class="configurator-h1">Конфигуратор ПК</h1>
+                    <form method="post" action="{% url 'configuratepc' %}">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+
+                        <!-- Поля формы -->
+                        <div class="form-group">
+                            {{ form.name.label_tag }}
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                                <div class="errors-message">{{ form.name.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Поля для выбора комплектующих -->
+                        {% for field in form %}
+                            {% if field.name not in 'name' %}
+                                <div class="form-group">
+                                    {{ field.label_tag }}
+                                    {{ field }}
+
+                                    <!-- Блок для динамической информации о выбранной комплектующей -->
+                                    <div class="component-info" id="{{ field.name }}-info">
+                                        <p id="{{ field.name }}-name"></p>
+                                        <p id="{{ field.name }}-specs"></p>
+                                    </div>
+
+                                    {% if field.errors %}
+                                        <div class="errors-message">{{ field.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+
+                        <!-- Кнопка отправки формы -->
+                        <button type="submit" class="btn btn-primary">Собрать конфигурацию</button>
+                    </form>
+                </div>
+
+                <div class="info-text">
+                    <h2 class="info-text-h2">Информация о комплектующем</h2>
+                    <!-- Блок для динамической информации -->
+                    <div id="component-info">
+                        <p id="component-name"></p>
+                        <p id="component-specs"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+</main>
+
+{% endblock %}
+

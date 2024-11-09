@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>готовые сборки пк</title>
+</head>
+
+{% block content %}
+    <main class='main'>
+    <section class="main-display-2">
+        <div class="main-background">
+            <img src="{% static 'Build/image/main-screen.jpg' %}" alt="main photo">
+        </div>
+
+        <section class="team">
+            <div class="container-pc-list">
+                <div class="process-title team-title">
+                    <div class="process-img">
+                        <img src="{% static 'Build/image/icon-heading.svg' %}" alt="logo2">
+                    </div>
+                    <h2 class="process-header">ПК Среднего Сегмента</h2>
+                </div>
+                <h3 class='process-header-2'>Самые оптимальные и выгодные сборки на данный момент</h3>
+                <div class="team-wrap">
+                    {% for comp in computers %}
+                    <div class="team-item">
+                        <h3 class="team-name">{{ comp.name }}</h3>
+                        <div class="comp-img">
+                            {% if comp.case.image %}
+                                <img src="{{ comp.case.image.url }}" alt="{{ comp.name }}">
+                            {% endif %}
+                        </div>
+                        <div class="team-profession">
+                            {{ comp.cpu.name }} | {{ comp.gpu.name }} |
+                            {% for ram in comp.ram.all %}
+                                {{ ram.memory_size }} {{ ram.type_memory }} RAM
+                            {% empty %}
+                                Нет RAM
+                            {% endfor %}
+                        </div>
+                        <a href="{% url 'computer' comp.slug %}" class="button team-link" target="">Купить | {{ comp.total_price }} рублей</a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </section>
+</main>
+    <main class='main'>
+        <main class='main'>
+        <div class="main-background">
+            <img src="{% static 'Build/image/main-screen.jpg' %}" alt="main photo">
+        </div>
+        <section class="team">
+            <div class="container-pc-list">
+                <div class="process-title team-title">
+                    <div class="process-img">
+                        <img src="{% static 'Build/image/icon-heading.svg' %}" alt="logo2">
+                    </div>
+                    <h2 class="process-header">ПК Топового Сегмента</h2>
+                </div>
+                <h3 class='process-header-2'>Самые оптимальные и выгодные сборки на данный момент</h3>
+                <div class="team-wrap">
+                    {% for comp in selected_computer %}
+                    <div class="team-item">
+                        <h3 class="team-name">{{ comp.name }}</h3>
+                        <div class="team-img">
+                            {% if comp.case.image %}
+                            <img src="{{ comp.case.image.url }}" alt="team 1 photo">
+                            {% endif %}
+                        </div>
+                        <div class="team-profession">
+                            {{ comp.cpu.name }} | {{ comp.gpu.name }} |
+                            {% for ram in comp.ram.all %}
+                                {{ ram.memory_size }} {{ ram.type_memory }} RAM
+                            {% empty %}
+                                Нет RAM
+                            {% endfor %}
+                        </div>
+                        <a href="{% url 'computer' comp.slug %}" class="button team-link" target="">Купить | {{ comp.total_price }} рублей</a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </section>
+    </main>
+
+
+{% endblock %}
+
+</body>
+</html>

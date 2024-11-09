@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<main class='main'>
+    <section class="main-display-2">
+        <div class="main-background">
+        </div>
+        <section class="team">
+            <div class="container-pc-list">
+                <div class="process-title team-title">
+                    <div class="computer-image">
+                        {% if component.image %}
+                            <img src="{{ component.image.url }}" alt="{{ component.name }}">
+                        {% endif %}
+                    </div>
+                    <div class="computer-name">
+                        <h1 class="computer-h1">{{ component.name }}</h1>
+                        <div class="computer-text">{{ component.info }}</div>
+                    </div>
+                </div>
+                <div class="computer-accessories">
+                    <h1 class="accessories-h1">Технические характеристики</h1>
+                    <table class="accessories">
+                        {% for field, value in component_fields.items %}
+                            <tr>
+                                <td><span>{{ value.0 }}:</span></td>  <!-- Описание поля -->
+                                <td>{{ value.1 }}</td>  <!-- Значение поля -->
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </section>
+    </section>
+</main>
+{% endblock %}
+

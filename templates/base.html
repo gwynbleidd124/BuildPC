@@ -1,0 +1,84 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building your PC</title>
+    <link rel="preconnect" href="fonts/Roboto-Bold.woff">
+    <link rel="preconnect" href="fonts/Roboto-Regular.woff">
+    <link type='text/css' href="{% static 'Build/css/style.css' %}" rel="stylesheet" />
+</head>
+    <header class="header">
+        <div class="header-wrap">
+            <a href="{% url 'homepage' %}" class="header-logo">
+                <img src="{% static 'Build/image/logo.svg' %}" alt="logo">
+            </a>
+            <div class="header-menu">
+                <nav class="header-nav">
+                    <a href="{% url 'buildspc' %}">Готовые сборки ПК</a>
+                    <a href="{% url 'accessories' %}">Комплектующие</a>
+                    <a href="{% url 'configuratepc' %}">Конфигуратор ПК</a>
+                    <a href="{% url 'buildpcusers' %}">Сборки ПК пользователей</a>
+                </nav>
+                {% if user.is_authenticated %}
+                    <div class="user-menu">
+                        <a href="#" class="main-profile">{{ user.username }}</a>
+                        <!-- Подменю, которое будет отображаться при наведении -->
+                        <div class="dropdown-menu">
+                            <a href="{% url 'users:profile' %}">Профиль</a>
+                            <a href="#">Настройки</a>
+                            <a href="{% url 'users:logout' %}">Выйти</a>
+                        </div>
+                    </div>
+
+                {% else %}
+                    <a href='{% url 'users:login' %}' class="button header-btn">
+                        Авторизация
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+{% block content %}
+{% endblock %}
+
+        <footer class="footer">
+    <div class="footer-container">
+        <!-- Логотип и краткое описание -->
+        <div class="footer-section footer-about">
+            <h3>О компании</h3>
+            <p>Наша компания предоставляет лучшие решения для сборки и настройки компьютеров, чтобы каждый клиент нашел то, что ему нужно.</p>
+        </div>
+
+        <!-- Навигация -->
+        <!-- Социальные сети -->
+        <div class="footer-section footer-socials">
+            <h3>Мы в соцсетях</h3>
+            <ul>
+                <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
+                <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
+                <li><a href="https://twitter.com" target="_blank">Twitter</a></li>
+                <li><a href="https://vk.com" target="_blank">ВКонтакте</a></li>
+            </ul>
+        </div>
+
+        <!-- Контактная информация -->
+        <div class="footer-section footer-contact">
+            <h3>Контакты</h3>
+            <p>Телефон: +7 (999) 123-45-67</p>
+            <p>Email: info@example.com</p>
+            <p>Адрес: г. Москва, ул. Примерная, 10</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024, Название компании. Все права защищены.</p>
+    </div>
+</footer>
+</body>
+
+
