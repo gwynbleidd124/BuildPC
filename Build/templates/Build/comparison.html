@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <main class='main'>
+        <section class="main-display-configurate">
+            <div class="main-background">
+                <img src="{% static 'Build/image/main-screen.jpg' %}" alt="main photo">
+            </div>
+            <section class="team">
+                <div class="comparison-container">
+                    <div class="comparison">
+                        {% for category, items in comparison_data.items %}
+                            <div class="comparison-category">
+                                {% for item in items %}
+                                    <div class="comparison-item">
+                                        <h3 class="comparison-h1">{{ item.name }}</h3>
+                                        <table class="accessories">
+                                            {% for field in item.fields %}
+                                                <tr>
+                                                    <td>{{ field.label }}: {{ field.value|default_if_none:"-" }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                        {% if item.image %}
+                                            <img src="{{ item.image.url }}" alt="{{ item.name }}">
+                                        {% endif %}
+                                        <form action="{% url 'remove_from_comparison' category=category pk=item.id %}"
+                                              method="post">
+                                            {% csrf_token %}
+                                            <button type="submit">Удалить</button>
+                                        </form>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% empty %}
+                            <p class="configurator-h1">Нет элементов для сравнения в категории {{ category }}</p>
+                        {% endfor %}
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+{% endblock %}
+

@@ -45,6 +45,7 @@ CATEGORY_ATTRIBUTES = {
     }
 }
 
+
 filters_pc = {
     'Компьютеры': {
         'gpu__manufacturer': ['MSI', 'GIGABYTE', 'Palit', 'Sapphire', 'ASRock', 'KFA2', 'Colorful'],
@@ -110,7 +111,7 @@ fields = {
             #Охлаждение для процессора
             'max_speed': 'Максимальная скорость вращение',
             'power_dissipation': 'Рассеиваемая мощность',
-            'heat_pipes': 'Количество телповых трубок',
+            'heat_pipes': 'Количество тепловых трубок',
             #Накопители
             'type': 'Тип накопителя',
             'memory_size_storage': 'Количество памяти',
@@ -127,3 +128,98 @@ fields = {
 
         }
 
+fields_for_category = {
+    'Видеокарты': [
+        {'field': 'manufacturer', 'label': 'Производитель'},
+        {'field': 'manufacturer_chip', 'label': 'Производитель чипа'},
+        {'field': 'memory', 'label': 'Память (GB)'},
+        {'field': 'type_memory', 'label': 'Тип памяти'},
+        {'field': 'memory_bus', 'label': 'Разрядность шины памяти (бит)'},
+        {'field': 'frequency', 'label': 'Частота видеопроцессора (МГц)'},
+        {'field': 'turbo_frequency', 'label': 'Частота в турбобусте (МГц)'},
+        {'field': 'universal_processors', 'label': 'Число универсальных процессоров:'},
+        {'field': 'texture_block', 'label': 'Текстурных блоков:'},
+        {'field': 'TDP', 'label': 'TDP(Вт)'},
+        {'field': 'PCIe', 'label': 'PCIe'},
+        {'field': 'color', 'label': 'Цвет'},
+        {'field': 'price', 'label': 'Цена (рублей)'},
+    ],
+    'Процессоры': [
+        {'field': 'manufacturer', 'label': 'Производитель'},
+        {'field': 'socket', 'label': 'Сокет'},
+        {'field': 'chipset', 'label': 'Чипсет'},
+        {'field': 'cores', 'label': 'Ядер'},
+        {'field': 'threads', 'label': 'Потоков'},
+        {'field': 'base_clock', 'label': 'Базовая частота (МГц)'},
+        {'field': 'turbo_clock', 'label': 'Частота в турбобоусте(МГц)'},
+        {'field': 'cash_1', 'label': 'Кеш 1-го уровня'},
+        {'field': 'cash_2', 'label': 'Кеш 2-го уровня'},
+        {'field': 'cash_3', 'label': 'Кеш 3-го уровня'},
+        {'field': 'price', 'label': 'Цена (рублей)'},
+    ],
+    'Материнские платы': [
+        {'field': 'manufacturer', 'label': 'Производитель'},
+        {'field': 'form_factor', 'label': 'Форм фактор'},
+        {'field': 'chipset', 'label': 'Чипсет'},
+        {'field': 'type_memory_mb', 'label': 'Тип памяти'},
+        {'field': 'memory_slots', 'label': 'Количество слотов памяти'},
+        {'field': 'M2_slots', 'label': 'Количество M2 слотов'},
+        {'field': 'price', 'label': 'Цена (рублей)'}
+    ],
+    'Блоки Питания': [
+        {'field': 'manufacturer', 'label': 'Производитель'},
+        {'field': 'wattage', 'label': 'Мощность(Ватт)'},
+        {'field': 'power_12W', 'label': 'Мощность по 12-ти вольтовой линии(Ватт)'},
+        {'field': 'certification', 'label': 'Сертификат'},
+        {'field': 'power_cpu', 'label': 'Разъёмы для питания процессора'},
+        {'field': 'power_gpu', 'label': 'Разъёмы для питания видеокарты'},
+        {'field': 'price', 'label': 'Цена (рублей)'}
+    ],
+    'Корпуса': [
+        {'field': 'manufacturer', 'label': 'Производитель'},
+        {'field': 'form_factor', 'label': 'Форм фактор'},
+        {'field': 'color', 'label': 'Цвет'},
+        {'field': 'location_power_supply', 'label': 'Расположение блока питания'},
+        {'field': 'side_window', 'label': 'Наличие бокового окна'},
+        {'field': 'price', 'label': 'Цена (рублей)'}
+    ],
+    'Охлаждение для процессора': [
+        {'field': 'manufacturer', 'label': 'Производитель'},
+        {'field': 'max_speed', 'label': 'Максимальная скорость вращение'},
+        {'field': 'power_dissipation', 'label': 'Рассеиваемая мощность'},
+        {'field': 'heat_pipes', 'label': 'Количество тепловых трубок'},
+        {'field': 'price', 'label': 'Цена (рублей)'}
+    ],
+    'Оперативная память': [
+        {'field': 'manufacturer', 'label': 'Производитель'},
+        {'field': 'type_memory', 'label': 'Тип памяти'},
+        {'field': 'memory_size', 'label': 'Количество памяти'},
+        {'field': 'number_of_modules', 'label': 'Количество модулей памяти'},
+        {'field': 'frequency_ram', 'label': 'Частота памяти'},
+        {'field': 'cl', 'label': 'cl'},
+        {'field': 'tRCD', 'label': 'tRCD'},
+        {'field': 'tRP', 'label': 'tRP'},
+        {'field': 'tRAS', 'label': 'tRAS'},
+        {'field': 'price', 'label': 'Цена (рублей)'}
+    ],
+    'Накопители': [
+        {'field': 'manufacturer', 'label': 'Производитель'},
+        {'field': 'type', 'label': 'Тип накопителя'},
+        {'field': 'memory_size_storage', 'label': 'Количество памяти'},
+        {'field': 'max_reading_speed', 'label': 'Максимальная скорость чтения'},
+        {'field': 'max_recording_speed', 'label': 'Максимальная скорость чтения'},
+        {'field': 'TBW', 'label': 'TBW'},
+        {'field': 'price', 'label': 'Цена (рублей)'}
+    ]
+}
+
+FIELD_LABELS = {
+    'gpu': 'Видеокарта',
+    'cpu': 'Процессор',
+    'motherboard': 'Материнская плата',
+    'ram': 'Оперативная память',
+    'power_supply': 'Блок питания',
+    'case': 'Корпус',
+    'storage_device': 'Накопитель',
+    'cooling_system': 'Охлаждение процессора',
+}

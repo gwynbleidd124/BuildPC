@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <main class='main'>
+        <section class="main-display-configurate">
+            <div class="main-background">
+                <img src="{% static 'Build/image/main-screen.jpg' %}" alt="main photo">
+            </div>
+            <section class="team">
+                <div class="configurator-container">
+                    <div class="configurator">
+                        <h2 class="configurator-h1">Текущая сборка</h2>
+                        <form method="post" action="{% url 'save_configurator' %}">
+                            {% csrf_token %}
+                            <label class='configurator-h2' for="name">Название сборки:</label>
+                            <input type="text" id="name" name="name" required>
+                            {% for data in selected_items %}
+                                <ul>
+                                    <li class="accessories-in-conf">
+                                        {% if not data.item %}
+                                            <div class="accessories-row">
+                                        {% else %}
+                                            <div class="accessories-selected">
+                                        {% endif %}
+                                        <span class="category-name">{{ data.category }}:</span>
+                                        {% if data.item %}
+                                            <a class="accessories-link-conf"
+                                               href="{% url 'component_detail' component_type=data.slug pk=data.item.pk %}">{{ data.item.name }}</a>
+                                            <div class="accessories-image-conf">
+                                                {% if data.item.image %}
+                                                    <img src="{{ data.item.image.url }}">
+                                                {% endif %}
+                                            </div>
+                                            <a class="button-conf" href="{% url 'category-items' slug=data.slug %}">Заменить</a>
+                                        {% else %}
+                                            <a class="button-conf" href="{% url 'category-items' slug=data.slug %}">Выбрать</a>
+                                        {% endif %}
+                                        </div>
+                                    </li>
+                                </ul>
+                            {% endfor %}
+                            <button type="submit" class="btn-success">Сохранить сборку</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+{% endblock %}

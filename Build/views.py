@@ -1,3 +1,5 @@
+from lib2to3.fixes.fix_input import context
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.http import HttpResponse, request, Http404, JsonResponse
@@ -25,13 +27,13 @@ class BuildsPC(ListView):
     def get_queryset(self):
         # Передаем записи с индексами 0, 1 и 4
         computers = Computer.objects.prefetch_related('ram').order_by('total_price')
-        return [computers[i] for i in [0, 1, 4] if i < len(computers)]
+        return [computers[i] for i in [0, 1, 2, 3, 4] if i < len(computers)]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Передаем записи с индексами 5 и 7
         computers = Computer.objects.prefetch_related('ram').order_by('total_price')
-        context['selected_computer'] = [computers[i] for i in [5, 7] if i < len(computers)]
+        context['selected_computer'] = [computers[i] for i in [5, 6, 7, 8, 9] if i < len(computers)]
         return context
 
 
@@ -77,19 +79,6 @@ class ComputerDetail(DetailView):
     template_name = 'Build/Computer_detail.html'
     context_object_name = 'computer'
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     # Получение комплектующих
-    #     context['gpus'] = self.object.gpu
-    #     context['cpus'] = self.object.cpu
-    #     context['motherboards'] = self.object.motherboard
-    #     context['rams'] = self.object.ram
-    #     context['powersupplies'] = self.object.power_supply
-    #     context['cases'] = self.object.case
-    #     context['storage_devices'] = self.object.storage_device
-    #     context['cooling_systems'] = self.object.cooling_system
-    #     return context
-
 
 class List_accessories(ListView):
     model = Category
@@ -98,56 +87,6 @@ class List_accessories(ListView):
 
     def get_queryset(self):
         return Category.objects.all()[3:]
-
-
-class PCConfigurateView(LoginRequiredMixin, CreateView):
-    model = Computer
-    template_name = 'Build/configuratepc.html'
-    form_class = ComputerConfigurationForm
-    success_url = reverse_lazy('configuratepc')
-    login_url = reverse_lazy('users:login')
-
-    def form_valid(self, form):
-        computer = form.save(commit=False)
-        computer.author = self.request.user
-
-        # Проверка на совместимость процессора и материнской платы
-        if computer.cpu and computer.motherboard:
-            if computer.cpu.socket != computer.motherboard.socket:
-                form.add_error('motherboard',
-                               'Выбранная материнская плата несовместима с этим процессором!Выберите другой сокет!')
-                return self.form_invalid(form)
-        if computer.motherboard and computer.case:
-            if computer.motherboard.form_factor == 'ATX' and computer.case.form_factor == 'Mini-Tower':
-                form.add_error('case', 'Выбранный корпус слишком маленький для данной материнской платы!')
-                return self.form_invalid(form)
-
-        # Подсчет общей стоимости
-        total_price = 0
-        if computer.gpu:
-            total_price += computer.gpu.price
-        if computer.cpu:
-            total_price += computer.cpu.price
-        if computer.motherboard:
-            total_price += computer.motherboard.price
-        if computer.power_supply:
-            total_price += computer.power_supply.price
-        if computer.cooling_system:
-            total_price += computer.cooling_system.price
-        if computer.case:
-            total_price += computer.case.price
-
-        total_price += sum(ram.price for ram in form.cleaned_data['ram'])
-        total_price += sum(storage_device.price for storage_device in form.cleaned_data['storage_device'])
-
-        computer.total_price = total_price
-        computer.save()
-
-        form.save_m2m()
-        return super().form_valid(form)
-
-
-
 
 
 class CategoryItemsView(ListView):
@@ -232,6 +171,7 @@ class CategoryItemsView(ListView):
         })
         return context
 
+
 class BuildPCUsers(ListView):
     model = Computer
     template_name = 'Build/BuildPCUsers.html'
@@ -274,3 +214,215 @@ class BuildPCUsers(ListView):
             **category_attributes  # Разворачиваем атрибуты категории
         })
         return context
+
+
+# test # test # test # test # test # test # test # test # test # test # test # test # test # test # test # test # test # test # test
+
+def add_to_configurator(request, category, pk):
+    category_models = {
+        'Видеокарты': GPU,
+        'Процессоры': CPU,
+        'Материнские платы': MotherBoard,
+        'Оперативная память': RAM,
+        'Блоки Питания': PowerSupply,
+        'Корпуса': Case,
+        'Накопители': StorageDevice,
+        'Охлаждение для процессора': CoolingSystem,
+    }
+
+    model = category_models.get(category)
+    if not model:
+        return JsonResponse({'error': 'Неверная категория'}, status=400)
+
+    item = get_object_or_404(model, pk=pk)
+    configurator = request.session.get('configurator', {})
+
+    configurator[category] = item.id
+    request.session['configurator'] = configurator
+    request.session.modified = True
+
+    return redirect('current_configurator')
+
+
+def current_configurator(request):
+    configurator = request.session.get('configurator', {})
+    category_models = {
+        'Видеокарты': GPU,
+        'Процессоры': CPU,
+        'Материнские платы': MotherBoard,
+        'Оперативная память': RAM,
+        'Блоки Питания': PowerSupply,
+        'Накопители': StorageDevice,
+        'Корпуса': Case,
+        'Охлаждение для процессора': CoolingSystem,
+    }
+
+    category_slug = {
+        'Видеокарты': 'videocarty',
+        'Процессоры': 'protsessory',
+        'Материнские платы': 'materinskie-platy',
+        'Оперативная память': 'operativnaja-pamjat',
+        'Блоки Питания': 'bloki-pitanija',
+        'Корпуса': 'korpus',
+        'Накопители': 'nakopiteli',
+        'Охлаждение для процессора': 'ohlazhdenie-dlja-protsessora',
+    }
+
+    selected_items = []
+    for category, slug in category_slug.items():
+        model = category_models.get(category)
+        item = model.objects.filter(pk=configurator.get(category)).first() if model else None
+        selected_items.append({
+            'category': category,
+            'slug': slug,
+            'item': item,
+        })
+
+    return render(request, 'Build/current_configurator.html', {'selected_items': selected_items})
+
+
+def save_configurator(request):
+    CATEGORY_MAPPING = {
+        'Видеокарты': 'gpu',
+        'Процессоры': 'cpu',
+        'Материнские платы': 'motherboard',
+        'Оперативная память': 'ram',
+        'Блоки Питания': 'power_supply',
+        'Корпуса': 'case',
+        'Накопители': 'storage_device',
+        'Охлаждение для процессора': 'cooling_system',
+    }
+
+    configurator = request.session.get('configurator', {})
+
+    # Преобразуем ключи с помощью CATEGORY_MAPPING
+    normalized_configurator = {
+        CATEGORY_MAPPING[key]: value
+        for key, value in configurator.items()
+        if key in CATEGORY_MAPPING
+    }
+    print("Преобразованный конфигуратор:", normalized_configurator)
+
+    # Проверяем наличие обязательных полей
+    required_fields = ['gpu', 'cpu', 'motherboard', 'ram', 'power_supply', 'case', 'storage_device', 'cooling_system',]
+    missing_fields = [field for field in required_fields if normalized_configurator.get(field) in [None, '', 0]]
+
+    if missing_fields:
+        print("Отсутствуют обязательные компоненты:", missing_fields)
+
+        # Используем FIELD_LABELS для преобразования технических названий в пользовательские
+        missing_labels = [FIELD_LABELS.get(field, field) for field in missing_fields]
+
+        error_message = f'Не выбраны обязательные компоненты: {", ".join(missing_labels)}'
+
+        return render(request, 'Build/error_configurate.html', {'error_message': error_message})
+
+
+    # Создаем объект сборки
+    computer = Computer(
+        name=request.POST.get('name', 'Сборка ПК'),
+        gpu=GPU.objects.filter(pk=normalized_configurator.get('gpu')).first(),
+        cpu=CPU.objects.filter(pk=normalized_configurator.get('cpu')).first(),
+        motherboard=MotherBoard.objects.filter(pk=normalized_configurator.get('motherboard')).first(),
+        power_supply=PowerSupply.objects.filter(pk=normalized_configurator.get('power_supply')).first(),
+        case=Case.objects.filter(pk=normalized_configurator.get('case')).first(),
+        cooling_system=CoolingSystem.objects.filter(pk=normalized_configurator.get('cooling_system')).first(),
+    )
+
+    computer.save()  # Сохраняем объект
+
+    # Для ManyToManyField используем set()
+    if normalized_configurator.get('ram'):
+        ram_objects = RAM.objects.filter(pk__in=[normalized_configurator.get('ram')])
+        computer.ram.set(ram_objects)
+
+    if normalized_configurator.get('storage_device'):
+        storage_objects = StorageDevice.objects.filter(pk__in=[normalized_configurator.get('storage_device')])
+        computer.storage_device.set(storage_objects)
+
+    computer.calculate_total_price()
+    computer.save()
+
+    # Очищаем сессию
+    request.session['configurator'] = {}
+    request.session.modified = True
+
+    return redirect('current_configurator')
+
+def add_to_comparison(request, category, pk):
+    category_models = {
+        'Видеокарты': GPU,
+        'Процессоры': CPU,
+        'Материнские платы': MotherBoard,
+        'Оперативная память': RAM,
+        'Блоки Питания': PowerSupply,
+        'Корпуса': Case,
+        'Накопители': StorageDevice,
+        'Охлаждение для процессора': CoolingSystem,
+    }
+
+    model = category_models.get(category)
+    if model is None:
+        return JsonResponse({'error': 'Неверная категория'}, status=400)
+
+    item = get_object_or_404(model, pk=pk)
+    comparison = request.session.get('comparison', {})
+
+    if category not in comparison:
+        comparison[category] = []
+
+    if len(comparison[category]) == 2:
+        comparison[category].pop(0)
+
+    if pk not in comparison[category]:
+        comparison[category].append(pk)
+
+    request.session['comparison'] = comparison
+    request.session.modified = True
+
+    return redirect('comparison')
+
+def comparison(request):
+    comparison = request.session.get('comparison', {})
+
+    category_models = {
+        'Видеокарты': GPU,
+        'Процессоры': CPU,
+        'Материнские платы': MotherBoard,
+        'Оперативная память': RAM,
+        'Блоки Питания': PowerSupply,
+        'Корпуса': Case,
+        'Накопители': StorageDevice,
+        'Охлаждение для процессора': CoolingSystem,
+    }
+
+    # Поля для отображения
+
+
+    comparison_data = {}
+    for category, ids in comparison.items():
+        model = category_models.get(category)
+        if model:
+            items = model.objects.filter(pk__in=ids)
+            prepared_items = []
+            for item in items:
+                fields = [
+                    {'label': field['label'], 'value': getattr(item, field['field'], None)}
+                    for field in fields_for_category.get(category, [])
+                ]
+                prepared_items.append({'name': item.name, 'fields': fields, 'image': item.image, 'id': item.id})
+            comparison_data[category] = prepared_items
+
+    return render(request, 'Build/comparison.html', {'comparison_data': comparison_data})
+
+
+def remove_from_comparison(request, category, pk):
+    comparison = request.session.get('comparison', {})
+    if category in comparison and pk in comparison[category]:
+        comparison[category].remove(pk)
+        if not comparison[category]:  # Если список пуст, удалить категорию
+            del comparison[category]
+        request.session['comparison'] = comparison
+        request.session.modified = True
+    return redirect('comparison')
+

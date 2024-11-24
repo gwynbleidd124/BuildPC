@@ -1,5 +1,6 @@
 {% load static %}
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,10 +20,10 @@
             </a>
             <div class="header-menu">
                 <nav class="header-nav">
-                    <a href="{% url 'buildspc' %}">Готовые сборки ПК</a>
+                    <a href="{% url 'buildpcusers' %}">Сборки ПК</a>
                     <a href="{% url 'accessories' %}">Комплектующие</a>
-                    <a href="{% url 'configuratepc' %}">Конфигуратор ПК</a>
-                    <a href="{% url 'buildpcusers' %}">Сборки ПК пользователей</a>
+                    <a href="{% url 'comparison' %}">Сравнение</a>
+                    <a href="{% url 'current_configurator' %}">Конфигуратор ПК</a>
                 </nav>
                 {% if user.is_authenticated %}
                     <div class="user-menu">

@@ -1,3 +1,5 @@
+
+
 @font-face {
     font-family: 'Roboto';
     src: url('Roboto-Bold.eot');
@@ -588,7 +590,7 @@ button, input {
 }
 
 .accessories {
-    margin-top: 3rem;
+    margin-top: 5rem;
     font-size: 2.5rem;
     width: 100%;
     border-collapse: collapse;
@@ -704,7 +706,22 @@ button, input {
     font-size: 2.5rem;
 }
 
+.get_to_conf {
+    position: absolute;
+    display: block; /* Делает ссылку блочным элементом, чтобы можно было применить отступ */
+    margin-top: 10rem; /* Задайте нужный отступ сверху */
+    text-decoration: none; /* Это уберет подчеркивание ссылки, если нужно */
+    color: white; /* Цвет ссылки, по желанию */
+    font-size: 2.5rem;
+}
+
+
 .accessories-link:hover {
+    text-decoration: underline;
+    color: #FFD700;
+}
+
+.get_to_conf:hover {
     text-decoration: underline;
     color: #FFD700;
 }
@@ -831,12 +848,27 @@ button, input {
     margin: 15rem auto;
     position: relative;
     z-index: 5;
+    min-height: 75rem;
 }
 
 
 .configurator-h1 {
     font-size: 2.5rem;
     color: #BB86FC; /* Акцентный цвет для заголовка */
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.configurator-error {
+    font-size: 2.5rem;
+    color: #BB86FC; /* Акцентный цвет для заголовка */
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.configurator-back {
+    font-size: 2.5rem;
+    color: #ff4d4d; /* Акцентный цвет для заголовка */
     text-align: center;
     margin-bottom: 1rem;
 }
@@ -852,7 +884,7 @@ label {
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
-    color: #BB86FC; /* Акцентный цвет для подписей */
+    color: #C89AFC; /* Акцентный цвет для подписей */
 }
 
 input, select, textarea {
@@ -872,9 +904,8 @@ input:focus, select:focus, textarea:focus {
 
 /* Кнопка отправки формы */
 button[type="submit"] {
-    width: 100%;
     padding: 1rem;
-    font-size: 1.2rem;
+    font-size: 2rem;
     border: none;
     border-radius: 8px;
     background-color: #BB86FC; /* Основной цвет кнопки */
@@ -882,6 +913,7 @@ button[type="submit"] {
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
 }
+
 
 .errors-message {
     font-size: 1.5rem;
@@ -905,6 +937,49 @@ button[type="submit"] {
     margin-left: 13rem;
     padding-bottom: 1rem;
 }
+
+.accessories-in-conf {
+    font-size: 2rem;
+    color: #C89AFC;
+    list-style: none;
+    border: 3px solid #3C3C3C;
+    padding: 1rem;
+}
+
+.accessories-link-conf {
+    color: #FFC8A8;
+}
+
+.button-conf {
+    border: 0.8rem solid #C89AFC;
+    border-radius: 0.8rem;
+    background-color: #C89AFC;
+    color: black;
+}
+
+
+.configurator-h2 {
+    margin-left: 4rem;
+    font-size: 3rem;
+}
+
+.accessories-image-conf {
+    width: 25rem;
+    height: auto;
+    margin-bottom: 1.5rem;
+}
+
+.accessories-row {
+    display: flex; /* Flexbox для выравнивания */
+    align-items: center; /* Вертикальное выравнивание */
+    justify-content: space-between; /* Пространство между текстом и кнопкой */
+    gap: 1rem; /* Пробел между элементами */
+    padding: 0.5rem 0; /* Отступы сверху и снизу */
+    background-color: #2C2C2C; /* Тёмный фон для пустых объектов */
+    opacity: 0.8; /* Прозрачность для визуального выделения */
+}
+
+
 /*            */   /*            */   /*            */  /*            */   /*            */   /*            */
 
 
@@ -1046,6 +1121,7 @@ button[type="submit"] {
     margin-top: 1rem;
     width: 100%;
     max-width: 60rem;
+
 }
 
 button[type="submit"]:hover {
@@ -1235,4 +1311,75 @@ button[type="submit"]:hover {
 .gpu-select option img {
     margin-right: 10px;
     border-radius: 5px;
+}
+
+
+/* конфигуратор пк */
+
+/* сравнение комплектующих */
+
+.comparison-container {
+    display: flex;
+    gap: 2rem; /* Расстояние между конфигуратором и текстом */
+    width: 170rem;
+    margin: 15rem auto;
+    position: relative;
+    z-index: 5;
+    min-height: 75rem;
+}
+
+.comparison {
+    max-width: 1800px;
+    background-color: #1E1E1E;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4); /* Тень */
+    flex: 2;
+}
+
+.comparison-category {
+    display: flex; /* Включаем flexbox */
+    flex-direction: row; /* Горизонтальное расположение */
+    justify-content: space-between; /* Равномерное распределение элементов */
+    gap: 20px; /* Расстояние между элементами */
+}
+
+.comparison-item {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+    width: 45%; /* Устанавливаем ширину элементов, чтобы они помещались рядом */
+    text-align: center;
+}
+
+.comparison-item img {
+    max-width: 75%;
+    height: auto;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #e60000;
+}
+
+.comparison-p {
+    font-size: 2rem;
+    margin-right: 30rem;
+}
+
+.comparison-h1 {
+    font-size: 2rem;
+    color: #BB86FC; /* Акцентный цвет для заголовка */
+    text-align: center;
+    margin-bottom: 1rem;
 }

@@ -266,6 +266,10 @@
                                                    href="{% url 'component_detail' component_type=category.slug pk=item.pk %}">
                                                     Посмотреть полную информацию
                                                 </a>
+                                                <a class="get_to_conf" href="{% url 'add_to_configurator' category=category pk=item.id %}"
+                                                   class="btn btn-primary">Добавить в конфигуратор ПК</a>
+                                                 <a class="" href="{% url 'add_to_comparison' category=category pk=item.id %}"
+                                                   class="btn btn-primary">Сравнить</a>
                                             {% elif category.slug == 'protsessory' %}
                                                 <h1>{{ item.name }} [ {{ item.manufacturer }} | {{ item.socket }}
                                                     | {{ item.chipset }}
@@ -276,7 +280,10 @@
                                                 <a class="accessories-link"
                                                    href="{% url 'component_detail' component_type=category.slug pk=item.pk %}">
                                                     Посмотреть полную информацию
+                                                <a class="" href="{% url 'add_to_comparison' category=category pk=item.id %}"
+                                                   class="btn btn-primary">Сравнить</a>
                                                 </a>
+                                                 <a class="get_to_conf" href="{% url 'add_to_configurator' category=category pk=item.id %}" class="btn btn-primary">Добавить в конфигуратор ПК</a>
                                             {% elif category.slug == 'materinskie-platy' %}
                                                 <h1>{{ item.name }} [ {{ item.manufacturer }}
                                                     | {{ item.form_factor }} | {{ item.socket }} | {{ item.chipset }}
@@ -286,6 +293,10 @@
                                                    href="{% url 'component_detail' component_type=category.slug pk=item.pk %}">
                                                     Посмотреть полную информацию
                                                 </a>
+                                                <a class="" href="{% url 'add_to_comparison' category=category pk=item.id %}"
+                                                   class="btn btn-primary">Сравнить</a>
+                                                </a>
+                                                 <a class="get_to_conf" href="{% url 'add_to_configurator' category=category pk=item.id %}" class="btn btn-primary">Добавить в конфигуратор ПК</a>
                                             {% elif category.slug == 'bloki-pitanija' %}
                                                 <h1>{{ item.name }} [ {{ item.manufacturer }}
                                                     | {{ item.wattage }} Ватт | {{ item.certification }}
@@ -295,12 +306,22 @@
                                                    href="{% url 'component_detail' component_type=category.slug pk=item.pk %}">
                                                     Посмотреть полную информацию
                                                 </a>
+                                                 <a class="get_to_conf" href="{% url 'add_to_configurator' category=category pk=item.id %}"
+                                                    class="btn btn-primary">Добавить в конфигуратор ПК</a>
+                                                <a class="" href="{% url 'add_to_comparison' category=category pk=item.id %}"
+                                                   class="btn btn-primary">Сравнить</a>
+                                                </a>
                                             {% elif category.slug == 'korpus' %}
                                                 <h1>{{ item.name }} [ {{ item.manufacturer }}
                                                     | {{ item.form_factor }} | {{ item.color }} ]</h1>
                                                 <a class="accessories-link"
                                                    href="{% url 'component_detail' component_type=category.slug pk=item.pk %}">
                                                     Посмотреть полную информацию
+                                                </a>
+                                                 <a class="get_to_conf" href="{% url 'add_to_configurator' category=category pk=item.id %}"
+                                                    class="btn btn-primary">Добавить в конфигуратор ПК</a>
+                                                <a class="" href="{% url 'add_to_comparison' category=category pk=item.id %}"
+                                                   class="btn btn-primary">Сравнить</a>
                                                 </a>
                                             {% elif category.slug == 'ohlazhdenie-dlja-protsessora' %}
                                                 <h1>{{ item.name }} [ {{ item.manufacturer }}
@@ -310,6 +331,11 @@
                                                    href="{% url 'component_detail' component_type=category.slug pk=item.pk %}">
                                                     Посмотреть полную информацию
                                                 </a>
+                                                 <a class="get_to_conf" href="{% url 'add_to_configurator' category=category pk=item.id %}"
+                                                    class="btn btn-primary">Добавить в конфигуратор ПК</a>
+                                                <a class="" href="{% url 'add_to_comparison' category=category pk=item.id %}"
+                                                   class="btn btn-primary">Сравнить</a>
+                                                </a>
                                             {% elif category.slug == 'operativnaja-pamjat' %}
                                                 <h1>{{ item.name }} [ {{ item.manufacturer }}
                                                     | {{ item.memory_size }}GBx{{ item.number_of_modules }}
@@ -318,6 +344,11 @@
                                                    href="{% url 'component_detail' component_type=category.slug pk=item.pk %}">
                                                     Посмотреть полную информацию
                                                 </a>
+                                                 <a class="get_to_conf" href="{% url 'add_to_configurator' category=category pk=item.id %}"
+                                                    class="btn btn-primary">Добавить в конфигуратор ПК</a>
+                                                <a class="" href="{% url 'add_to_comparison' category=category pk=item.id %}"
+                                                   class="btn btn-primary">Сравнить</a>
+                                                </a>
                                             {% elif category.slug == 'nakopiteli' %}
                                                 <h1>{{ item.name }} [ {{ item.manufacturer }}
                                                     | {{ item.memory_size }}GBx{{ item.number_of_modules }}
@@ -325,6 +356,11 @@
                                                 <a class="accessories-link"
                                                    href="{% url 'component_detail' component_type=category.slug pk=item.pk %}">
                                                     Посмотреть полную информацию
+                                                </a>
+                                                 <a class="get_to_conf" href="{% url 'add_to_configurator' category=category pk=item.id %}"
+                                                    class="btn btn-primary">Добавить в конфигуратор ПК</a>
+                                                <a class="" href="{% url 'add_to_comparison' category=category pk=item.id %}"
+                                                   class="btn btn-primary">Сравнить</a>
                                                 </a>
                                             {% else %}
                                                 <h1>{{ item.name }}</h1>
