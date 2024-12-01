@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+        <main class='main'>
+        <section class="main-display-configurate">
+            <div class="main-background">
+                <img src="{% static 'Build/image/main-screen.jpg' %}" alt="main photo">
+            </div>
+            <section class="team">
+                <div class="comparison-container">
+                    <div class="comparison">
+                            <h1>Текущая цена товара</h1>
+                        {% for price in prices %}
+                            {{ price }}
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+{% endblock %}

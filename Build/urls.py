@@ -19,4 +19,5 @@ urlpatterns = [
     path('comparison/add/<str:category>/<int:pk>/', add_to_comparison, name='add_to_comparison'),
     path('comparison/', comparison, name='comparison'),
     path('comparison/remove/<str:category>/<int:pk>/', remove_from_comparison, name='remove_from_comparison'),
+    # path('price/', price_view, name='price-view'),
 ]

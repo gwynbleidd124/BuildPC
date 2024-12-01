@@ -15,6 +15,10 @@ import Build
 from Build.forms import *
 from Build.models import *
 
+import requests
+from bs4 import BeautifulSoup
+
+
 
 class HomePage(TemplateView):
     template_name = 'Build/index.html'
@@ -425,4 +429,32 @@ def remove_from_comparison(request, category, pk):
         request.session['comparison'] = comparison
         request.session.modified = True
     return redirect('comparison')
+
+
+# def fetch_prices(url):
+#     try:
+#         # Выполняем HTTP-запрос
+#         response = requests.get(url)
+#         response.raise_for_status()  # Проверяем успешность запроса
+#
+#         # Анализируем HTML-страницу
+#         soup = BeautifulSoup(response.text, 'html.parser')
+#
+#         # Ищем все элементы с классом 'price'
+#         price_elements = soup.select('.price')  # select возвращает список всех элементов
+#
+#         if price_elements:
+#             # Извлекаем текст для каждой найденной цены
+#             prices = [price_element.get_text(strip=True) for price_element in price_elements]
+#             return prices
+#         else:
+#             return ["Цены не найдены"]
+#
+#     except Exception as e:
+#         return [f"Ошибка: {e}"]
+#
+# def price_view(request):
+#     url = 'https://dinakom.net/index.php?route=product/category&path=60_96'  # URL страницы с ценами
+#     prices = fetch_prices(url)  # Получаем все цены
+#     return render(request, 'Build/price.html', {'prices': prices})
 

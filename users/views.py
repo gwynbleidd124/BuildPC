@@ -1,5 +1,3 @@
-from msilib.schema import ListView
-
 from django.contrib.auth import logout, get_user_model
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
